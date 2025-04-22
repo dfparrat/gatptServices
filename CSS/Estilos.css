@@ -1,0 +1,389 @@
+@font-face {
+	font-family: "Slabo";
+	src: url(../fonts/Slabo27px-Regular.ttf) format("truetype");
+  }
+  
+  * {
+	font-family: "Slabo", serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+  }
+  
+  /* ===== Modern Color Scheme ===== */
+  :root {
+	--primary: #e74c3c;       /* Warm accent for buttons/CTAs */
+	--secondary: #3498db;     /* Trustworthy blue */
+	--dark: #132026;          /* Your existing dark header color */
+	--light: #f7f8fb;         /* Light background */
+	--accent: #f45b03;        /* Orange from your WhatsApp button */
+	--text: #2c3e50;          /* Dark gray for readability */
+	--white: #ffffff;
+	--shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	--transition: all 0.3s ease;
+  }
+  
+  body {
+	background-color: var(--white);
+	background-image: url("../IMG/background.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	color: var(--text);
+	line-height: 1.6;
+  }
+  
+  /* ===== Enhanced Header ===== */
+  header {
+	background-color: var(--dark);
+	border-radius: 10px 10px 0 0;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 1rem 2rem;
+	box-shadow: var(--shadow);
+	animation: slidein 2s;
+  }
+  
+  #topheader {
+	background-color: var(--light);
+	border-bottom: 2px solid #ddd; /* Softer than silver */
+	padding: 0.5rem 0;
+  }
+  
+  #topheader a {
+	color: var(--text);
+	font-weight: 600;
+	font-size: 0.89rem;
+	transition: var(--transition);
+  }
+  
+  #topheader a:hover {
+	color: var(--primary);
+  }
+  
+  #titulo {
+	font-size: 1.8rem;
+	color: var(--white);
+	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  }
+  
+  #topLogo {
+	width: 120px;
+	height: auto; /* Maintain aspect ratio */
+  }
+  
+  /* ===== Modern Navigation ===== */
+  .menu a {
+	color: var(--white);
+	text-decoration: none;
+	font-size: 1.1rem;
+	font-weight: 600;
+	padding: 0.5rem 1rem;
+	transition: var(--transition);
+  }
+  
+  .menu a:hover {
+	color: var(--accent);
+	transform: translateY(-2px);
+  }
+  
+  .menu a+a::before {
+	content: "|";
+	color: rgba(255, 255, 255, 0.5);
+	padding: 0 1rem;
+  }
+  
+  /* ===== Hero Section Improvements ===== */
+  .Top-body {
+	background-color: rgba(52, 152, 219, 0.2);
+	color: var(--white);
+	padding: 3rem 2rem;
+	text-align: center;
+	backdrop-filter: blur(3px);
+  }
+  
+  .Top-body a {
+	color: var(--white);
+	background-color: var(--primary);
+	padding: 12px 24px;
+	border-radius: 4px;
+	text-decoration: none;
+	font-weight: 600;
+	transition: var(--transition);
+	display: inline-block;
+	margin-top: 1rem;
+  }
+  
+  .Top-body a:hover {
+	background-color: #c0392b;
+	transform: translateY(-3px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* ===== Product/Service Showcase ===== */
+  .Middle-body {
+	background-image: url("../IMG/Mant_6.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: center;
+	padding: 4rem 0;
+	position: relative;
+  }
+  
+  .Middle-body::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.4);
+  }
+  
+  #Mbody {
+	background-color: rgba(247, 248, 251, 0.9);
+	padding: 2rem;
+	border-radius: 8px;
+	box-shadow: var(--shadow);
+	position: relative;
+  }
+  
+  #Mbody-2 {
+	background-color: rgba(0, 0, 0, 0.7);
+	padding: 2rem;
+	border-radius: 8px;
+	color: var(--white);
+  }
+  
+  #Mbody-2 label {
+	color: var(--white);
+	font-weight: 600;
+  }
+  
+  #Mbody-2 img {
+	height: 300px;
+	width: 350px;
+	border-radius: 50%;
+	object-fit: cover;
+	border: 5px solid var(--accent);
+	transition: var(--transition);
+  }
+  
+  #Mbody-2 img:hover {
+	transform: scale(1.05);
+  }
+  
+  /* ===== Modern Form Styling ===== */
+  #formulario {
+	background: rgba(50, 47, 47, 0.9);
+	color: var(--white);
+	padding: 2rem;
+	border-radius: 8px;
+	box-shadow: var(--shadow);
+  }
+  
+  #formulario input,
+  #formulario textarea {
+	width: 100%;
+	padding: 12px;
+	margin-bottom: 1rem;
+	border: 1px solid #ddd;
+	border-radius: 4px;
+	background: rgba(255, 255, 255, 0.9);
+  }
+  
+  /* ===== WhatsApp Button Enhancement ===== */
+  .whatsapp_1 {
+	background-color: #25D366;
+	color: var(--white);
+	border: none;
+	border-radius: 8px;
+	padding: 12px 24px;
+	font-weight: 600;
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+	transition: var(--transition);
+  }
+  
+  .whatsapp_1:hover {
+	background-color: #128C7E;
+	transform: translateY(-3px);
+	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* ===== Footer Improvements ===== */
+  .fullfooter {
+	background: linear-gradient(to right, #0f2027, #153269, #2c5364);
+	padding: 2rem 0;
+	color: var(--white);
+  }
+  
+  .fullfooter a {
+	color: var(--white);
+	transition: var(--transition);
+  }
+  
+  .fullfooter a:hover {
+	color: var(--accent);
+	text-decoration: none;
+  }
+  
+  .bottom-footer {
+	background-color: #040e20;
+	padding: 0.5rem 0;
+	text-align: center;
+  }
+  
+  .bottom-footer p {
+	color: var(--white);
+	margin: 0;
+	font-size: 0.9rem;
+  }
+  
+  /* ===== Responsive Adjustments ===== */
+  @media (max-width: 768px) {
+	header {
+	  flex-direction: column;
+	  text-align: center;
+	}
+	
+	.menu {
+	  margin-top: 1rem;
+	}
+	
+	#formulario {
+	  margin-left: 1rem;
+	  margin-right: 1rem;
+	  width: auto;
+	  padding-left: 1rem;
+	}
+	
+	#Mbody-2 img {
+	  width: 100%;
+	  height: auto;
+	}
+  }
+  
+  @keyframes slidein {
+	from { transform: translateY(-50px); opacity: 0; }
+	to { transform: translateY(0); opacity: 1; }
+  }
+  /* ===== FIRE-THEMED ENHANCEMENTS ===== */
+:root {
+	--flame-gradient: linear-gradient(45deg, #e74c3c, #f39c12, #e67e22);
+	--metal-gradient: linear-gradient(to right, #bdc3c7, #2c3e50);
+  }
+  
+  /* ===== ANIMATED FIREPLACE/BURNER EFFECT ===== */
+  @keyframes flicker {
+	0%, 100% { opacity: 0.8; }
+	50% { opacity: 1; }
+  }
+  
+  .fire-effect {
+	position: relative;
+  }
+  
+  .fire-effect::after {
+	content: "";
+	position: absolute;
+	bottom: -10px;
+	left: 50%;
+	transform: translateX(-50%);
+	width: 80%;
+	height: 30px;
+	background: var(--flame-gradient);
+	border-radius: 50%;
+	filter: blur(10px);
+	animation: flicker 2s infinite alternate;
+	z-index: -1;
+  }
+  
+  /* ===== PRODUCT CARD ENHANCEMENTS ===== */
+  .product-card {
+	position: relative;
+	overflow: hidden;
+	transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
+	border: 1px solid rgba(0,0,0,0.1);
+  }
+  
+  .product-card:hover {
+	transform: translateY(-5px);
+	box-shadow: 0 14px 28px rgba(0,0,0,0.1), 0 10px 10px rgba(0,0,0,0.08);
+  }
+  
+  .product-card::before {
+	content: "HOT DEAL";
+	position: absolute;
+	top: 10px;
+	right: -30px;
+	background: var(--flame-gradient);
+	color: white;
+	padding: 3px 30px;
+	transform: rotate(45deg);
+	font-size: 12px;
+	font-weight: bold;
+	z-index: 1;
+  }
+  
+  /* ===== THERMOMETER STYLE RATINGS ===== */
+  .rating-bar {
+	height: 6px;
+	background: linear-gradient(to right, #3498db, #2ecc71);
+	position: relative;
+	border-radius: 3px;
+  }
+  
+  .rating-bar::after {
+	content: "";
+	position: absolute;
+	right: 0;
+	top: -4px;
+	width: 3px;
+	height: 14px;
+	background: var(--primary);
+  }
+  
+  /* ===== METALLIC ACCENTS ===== */
+  .metal-badge {
+	background: var(--metal-gradient);
+	color: white;
+	padding: 5px 10px;
+	border-radius: 4px;
+	text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+	box-shadow: inset 0 1px 1px rgba(255,255,255,0.2);
+	border: 1px solid rgba(0,0,0,0.2);
+  }
+  
+  /* ===== COZY TEXT EFFECTS ===== */
+  .cozy-text {
+	font-family: "Slabo", serif;
+	text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+	line-height: 1.3;
+	position: relative;
+  }
+  
+  .cozy-text::after {
+	content: "";
+	display: block;
+	width: 50px;
+	height: 3px;
+	background: var(--flame-gradient);
+	margin: 10px 0;
+  }
+  
+  /* ===== RESPONSIVE TWEAKS ===== */
+  @media (max-width: 768px) {
+	.fire-effect::after {
+	  height: 15px;
+	  width: 60%;
+	}
+	
+	.product-card::before {
+	  right: -35px;
+	  font-size: 10px;
+	}
+  }
