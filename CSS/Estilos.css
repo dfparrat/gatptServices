@@ -35,12 +35,12 @@
   
   /* ===== Enhanced Header ===== */
   header {
+	width: 100vw;
 	background-color: var(--dark);
 	border-radius: 10px 10px 0 0;
 	display: flex;
 	flex-direction: row;
 	align-items: center;
-	padding: 1rem 2rem;
 	box-shadow: var(--shadow);
 	animation: slidein 2s;
   }
@@ -68,6 +68,44 @@
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   }
   
+  #bottomheader {
+    /* Altura base */
+    height: 70px;
+    display: flex;
+    align-items: center;
+    background-color: #000; /* Asumiendo fondo oscuro por navbar-dark */
+    
+    /* Transición suave para cambios */
+    transition: height 0.3s ease;
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    #bottomheader {
+        height: auto; /* Altura automática en móviles */
+        padding: 10px 0;
+    }
+    
+    /* Ajustar logo en móviles */
+    #topLogo {
+        max-height: 50px;
+    }
+}
+
+/* Asegurar que el navbar no crezca más allá del header */
+.navbar {
+    padding: 0;
+    width: 100%;
+}
+
+/* Ajustar items de navegación */
+.navbar-nav {
+    align-items: center;
+}
+
+.nav-link {
+    padding: 10px 15px !important;
+}
   #topLogo {
 	width: 120px;
 	height: auto; /* Maintain aspect ratio */
@@ -121,15 +159,40 @@
 	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
   /* ===== slider styles ===== */
-
-  .carousel-inner img {
-	height: 500px;
-	width: 900px;
-	object-fit: cover;
-	filter: brightness(80%);
-	transition: filter 0.5s ease;
+/* Contenedor principal - ya lo tienes */
+#heroCarousel {
+	height: 50vh;
+	min-height: 300px;
+	position: relative;
   }
-
+  
+  /* Estos 3 elementos deben heredar la altura al 100% */
+  #heroCarousel .carousel-inner,
+  #heroCarousel .carousel-item,
+  #heroCarousel .carousel-item img {
+	height: 100% !important; /* El !important asegura que sobrescriba otros estilos */
+	width: 100%;
+  }
+  
+  /* Ajuste específico para las imágenes */
+  #heroCarousel .carousel-item img {
+	object-fit: cover;       /* Cubre el espacio manteniendo proporciones */
+	object-position: center; /* Enfoca el centro de la imagen */
+	display: block;         /* Elimina espacio fantasma debajo de la imagen */
+  }
+  
+  /* Corrección para Bootstrap */
+  .carousel-item {
+	transition: transform 0.6s ease-in-out !important; /* Animación suave */
+  }
+  
+  /* Ajuste para los controles */
+  .carousel-control-prev,
+  .carousel-control-next {
+	height: 100%; /* Botones a toda altura */
+  }
+  
+ 
   .carousel-caption {
 	background: rgba(0, 0, 0, 0.7);
 	padding: 20px 30px;
@@ -300,6 +363,83 @@
 	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
   
+    /* ===== ANIMATION OF BRANDS CAROUSEL===== */
+	.slider_brands {
+		width: 100vw;
+		height: 200px;
+		margin: auto;
+		overflow: hidden;
+		position: relative;
+	}
+.slider_brands .slide-track {
+	display: flex;
+	gap: 20px;
+	animation: scroll 40s linear infinite;
+	width: calc(250px * 20);
+}
+.slider_brands .slide{
+	width: 350px;
+	height: 200px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+.slider_brands .slide img {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	object-fit: contain; /* Mantiene proporciones sin distorsión */
+	transition: all 0.3s ease;
+  }
+@keyframes scroll{
+	0%{
+		transform: translatex(0);
+	}
+	100%{
+		transform: translatex(calc(-250px*10));
+	}
+}
+    /* ===== DEPLICATEDANIMATION OF BRANDS CAROUSEL===== */
+	.slider_brands_2 {
+		width: 100vw;
+		height: 100px;
+		margin: auto;
+		overflow: hidden;
+		position: relative;
+	}
+.slider_brands_2 .slide-track_2 {
+	display: flex;
+	gap: 20px;
+	animation: scroll 40s linear infinite;
+	width: calc(100px * 20);
+}
+.slider_brands_2 .slide_2{
+	width: 350px;
+	height: 100px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+}
+.slider_brands_2 .slide_2 img {
+	max-width: 100%;
+	max-height: 100%;
+	width: auto;
+	height: auto;
+	object-fit: contain; /* Mantiene proporciones sin distorsión */
+	transition: all 0.3s ease;
+  }
+@keyframes scroll{
+	0%{
+		transform: translatex(0);
+	}
+	100%{
+		transform: translatex(calc(-100px*10));
+	}
+}
+
   /* ===== Footer Improvements ===== */
   .fullfooter {
 	background: linear-gradient(to right, #0f2027, #153269, #2c5364);
