@@ -36,3 +36,5 @@ function enviarMensaje()
     // Abre la URL en una nueva pestaña
     window.open(whatsappUrl, "_blank");
 }
+//Creación script para slider
+
