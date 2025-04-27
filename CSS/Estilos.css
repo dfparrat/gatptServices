@@ -12,12 +12,12 @@
   
   /* ===== Modern Color Scheme ===== */
   :root {
-	--primary: #e74c3c;       /* Warm accent for buttons/CTAs */
-	--secondary: #3498db;     /* Trustworthy blue */
-	--dark: #132026;          /* Your existing dark header color */
-	--light: #f7f8fb;         /* Light background */
-	--accent: #f45b03;        /* Orange from your WhatsApp button */
-	--text: #2c3e50;          /* Dark gray for readability */
+	--primary: #e74c3c; 
+	--secondary: #3498db;
+	--dark: #132026; 
+	--light: #f7f8fb; 
+	--accent: #f45b03; 
+	--text: #2c3e50;
 	--white: #ffffff;
 	--shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	--transition: all 0.3s ease;
@@ -47,7 +47,7 @@
   
   #topheader {
 	background-color: var(--light);
-	border-bottom: 2px solid #ddd; /* Softer than silver */
+	border-bottom: 2px solid #ddd;
 	padding: 0.5rem 0;
   }
   
@@ -73,32 +73,24 @@
     height: 70px;
     display: flex;
     align-items: center;
-    background-color: #000; /* Asumiendo fondo oscuro por navbar-dark */
-    
-    /* Transición suave para cambios */
+    background-color: #000;
     transition: height 0.3s ease;
 }
-
-/* Ajuste para móviles */
 @media (max-width: 768px) {
     #bottomheader {
-        height: auto; /* Altura automática en móviles */
+        height: auto;
         padding: 10px 0;
     }
-    
-    /* Ajustar logo en móviles */
-    #topLogo {
+	    #topLogo {
         max-height: 50px;
     }
 }
 
-/* Asegurar que el navbar no crezca más allá del header */
 .navbar {
     padding: 0;
     width: 100%;
 }
 
-/* Ajustar items de navegación */
 .navbar-nav {
     align-items: center;
 }
@@ -108,7 +100,7 @@
 }
   #topLogo {
 	width: 120px;
-	height: auto; /* Maintain aspect ratio */
+	height: auto;
   }
   
   /* ===== Modern Navigation ===== */
@@ -158,38 +150,70 @@
 	transform: translateY(-3px);
 	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
+
+/* Styles for PopUp*/
+#welcomeModal .modal-content {
+    border-radius: 10px;
+    border: none;
+	background-color: #132026;
+}
+
+#welcomeModal .modal-header {
+    background-color: #4e73df;
+    color: white;
+    border-radius: 9px 9px 0 0;
+}
+.Options .form-label{
+	color: white;
+}
+.Options #serviceNeeded{
+	background-color: #4e73df;
+	color: white;
+	height: 50px;
+}
+#welcomeModal .btn-close {
+    filter: invert(1);
+}
+
+#sendWhatsAppBtn {
+    background-color: #25D366;
+    border-color: #25D366;
+}
+
+#sendWhatsAppBtn:hover {
+    background-color: #128C7E;
+    border-color: #128C7E;
+}
+
   /* ===== slider styles ===== */
-/* Contenedor principal - ya lo tienes */
 #heroCarousel {
 	height: 50vh;
 	min-height: 300px;
 	position: relative;
   }
-  
-  /* Estos 3 elementos deben heredar la altura al 100% */
   #heroCarousel .carousel-inner,
   #heroCarousel .carousel-item,
   #heroCarousel .carousel-item img {
-	height: 100% !important; /* El !important asegura que sobrescriba otros estilos */
+	height: 100% !important; 
 	width: 100%;
   }
   
   /* Ajuste específico para las imágenes */
   #heroCarousel .carousel-item img {
-	object-fit: cover;       /* Cubre el espacio manteniendo proporciones */
-	object-position: center; /* Enfoca el centro de la imagen */
-	display: block;         /* Elimina espacio fantasma debajo de la imagen */
+	object-fit: cover;       
+	object-position: center; 
+	display: block;
   }
   
   /* Corrección para Bootstrap */
   .carousel-item {
-	transition: transform 0.6s ease-in-out !important; /* Animación suave */
+	transition: transform 0.6s ease-in-out !important;
   }
   
   /* Ajuste para los controles */
   .carousel-control-prev,
   .carousel-control-next {
-	height: 100%; /* Botones a toda altura */
+	height: 100%;
   }
   
  
@@ -239,11 +263,11 @@
 }
 
 .carousel-control-prev::before {
-    content: "\f053"; /* Icono fa-chevron-left */
+    content: "\f053";
 }
 
 .carousel-control-next::before {
-    content: "\f054"; /* Icono fa-chevron-right */
+    content: "\f054";
 }
   /* ===== Product/Service Showcase ===== */
   .Middle-body {
@@ -275,24 +299,20 @@
   }
   .Middle-body img.img-fluid {
     width: 100%;
-    height: 250px; /* Ajusta este valor según necesites */
-    object-fit: cover; /* Esto recortará la imagen manteniendo proporciones */
-    object-position: center; /* Enfoca el centro de la imagen */
-    border-radius: 8px; /* Opcional: para esquinas redondeadas */
+    height: 250px; 
+    object-fit: cover; 
+    object-position: center; 
+    border-radius: 8px; 
     margin-bottom: 15px;
 }
 .Middle-body {
-    color: white; /* Cambia este valor al color que necesites */
+    color: white;
 }
-
-/* Si solo quieres cambiar los títulos */
 .Middle-body h2, .Middle-body h3 {
-    color: white; /* Color oscuro profesional */
+    color: white;
 }
-
-/* Si quieres cambiar los párrafos */
 .Middle-body p {
-    color: white; /* Color gris para texto secundario */
+    color: white;
 }
   
   #Mbody-2 {
@@ -363,8 +383,8 @@
 	box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
   
-    /* ===== ANIMATION OF BRANDS CAROUSEL===== */
-	.slider_brands {
+ /* ===== ANIMATION OF BRANDS CAROUSEL===== */
+.slider_brands {
 		width: 100vw;
 		height: 200px;
 		margin: auto;
@@ -390,7 +410,7 @@
 	max-height: 100%;
 	width: auto;
 	height: auto;
-	object-fit: contain; /* Mantiene proporciones sin distorsión */
+	object-fit: contain;
 	transition: all 0.3s ease;
   }
 @keyframes scroll{
@@ -401,8 +421,8 @@
 		transform: translatex(calc(-250px*10));
 	}
 }
-    /* ===== DEPLICATEDANIMATION OF BRANDS CAROUSEL===== */
-	.slider_brands_2 {
+    /* ===== DEPLICATED ANIMATION OF BRANDS CAROUSEL===== */
+.slider_brands_2 {
 		width: 100vw;
 		height: 100px;
 		margin: auto;
@@ -428,7 +448,7 @@
 	max-height: 100%;
 	width: auto;
 	height: auto;
-	object-fit: contain; /* Mantiene proporciones sin distorsión */
+	object-fit: contain;
 	transition: all 0.3s ease;
   }
 @keyframes scroll{
@@ -469,7 +489,65 @@
 	font-size: 0.9rem;
   }
   
-  /* ===== Responsive Adjustments ===== */
+
+  /*fixed button whatsapp and Phone call*/
+.whatsapp-btn, .call-btn {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex !important; /* Fuerza la visualización */
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999 !important;
+    right: 20px;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-btn {
+    background-color: #25D366;
+    color: white;
+    bottom: 100px; /* WhatsApp arriba */
+}
+
+.call-btn {
+    background-color: #4e73df;
+    color: white;
+    bottom: 20px; /* Llamada abajo */
+}
+
+/* Ajustes para móviles - Media query CORREGIDA */
+@media (max-width: 768px) {
+    .whatsapp-btn, .call-btn {
+        width: 55px;
+        height: 55px;
+        right: 15px;
+    }
+    
+    .whatsapp-btn {
+        bottom: 90px; /* Ajuste vertical móvil */
+    }
+    
+    .call-btn {
+        bottom: 15px;
+    }
+    
+    .whatsapp-btn i, 
+    .call-btn i {
+        font-size: 1.5rem !important; /* Tamaño seguro para iconos */
+    }
+}
+
+/* Garantizar visibilidad en todos los dispositivos */
+@media (max-width: 480px) {
+    .whatsapp-btn, .call-btn {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+/* ===== Responsive Adjustments ===== */
   @media (max-width: 768px) {
 	header {
 	  flex-direction: column;

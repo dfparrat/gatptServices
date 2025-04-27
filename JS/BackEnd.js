@@ -36,5 +36,47 @@ function enviarMensaje()
     // Abre la URL en una nueva pestaña
     window.open(whatsappUrl, "_blank");
 }
-//Creación script para slider
+//Send information from PopUp
+// Mostrar popup al cargar la página
+$(document).ready(function() {
+    // Mostrar el modal después de 2 segundos
+    setTimeout(function() {
+        var welcomeModal = new bootstrap.Modal(document.getElementById('welcomeModal'));
+        welcomeModal.show();
+    }, 2000);
 
+    // Manejar el envío a WhatsApp
+    $('#sendWhatsAppBtn').click(function() {
+        const firstName = $('#firstName').val();
+        const lastName = $('#lastName').val();
+        const serviceNeeded = $('#serviceNeeded').val();
+        
+        if (!firstName || !lastName || !serviceNeeded) {
+            alert('Por favor completa todos los campos.');
+            return;
+        }
+        
+        // Formatear el mensaje para WhatsApp
+        const message = `Hola, mi nombre es ${firstName} ${lastName}. Estoy interesado en el servicio de: ${serviceNeeded}. Por favor dame más información de precios y horarios.`;
+        
+        // Codificar el mensaje para URL
+        const encodedMessage = encodeURIComponent(message);
+        
+        // Tu número de WhatsApp (reemplaza con el real)
+        const whatsappNumber = '573132031426'; // Ejemplo: número colombiano
+        
+        // Redirigir a WhatsApp
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        
+        // Cerrar el modal
+        $('#welcomeModal').modal('hide');
+        
+        // Opcional: Guardar en localStorage para no mostrar de nuevo
+        localStorage.setItem('welcomePopupShown', 'true');
+    });
+    
+    // Opcional: No mostrar si ya se vio antes
+    if (localStorage.getItem('welcomePopupShown')) {
+        $('#welcomeModal').modal('hide');
+    }
+});

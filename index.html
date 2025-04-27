@@ -6,7 +6,6 @@
 	<meta name="keywords" content="html,css,xml,javascript">
 	<meta name="Servicio de Mantenimiento" content="Servicio de Mantenimiento">
 	<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1.0, shrink-to-fit=no">
-	<meta name="description" content="Gatpt - Servicios profesionales de Calentadores"> <!-- Añadí meta description importante para SEO -->
 	<title>Servicio de Mantenimiento Gustavo Parra</title>
 	<link rel="stylesheet" href="CSS/bootstrap/css/bootstrap.min.css">
 	<link href="CSS/Estilos.css" type="text/css" rel="stylesheet">
@@ -75,6 +74,47 @@
 			</div>
 		</div>
 	</header>
+	<a href="https://wa.me/573132031426?text=Hola,%20quiero%20más%20información" 
+   class="whatsapp-float" 
+   target="_blank">
+   <i class="fab fa-whatsapp"></i>
+</a>
+
+<!-- Popup de Bienvenida -->
+<div class="modal fade" id="welcomeModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">¡Bienvenido esribenos!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="welcomeForm">
+                    <div class="mb-3">
+                        <label for="firstName" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="firstName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="lastName" class="form-label">Apellido</label>
+                        <input type="text" class="form-control" id="lastName" required>
+                    </div>
+                    <div class="mb-3 Options">
+                        <label for="serviceNeeded" class="form-label">¿Qué servicio estás buscando?</label>
+                        <select class="form-select" id="serviceNeeded" required>
+                            <option value="" selected disabled>Selecciona una opción</option>
+                            <option value="Asistencia Técnica">Asistencia Técnica</option>
+                            <option value="Garantía">Garantía</option>
+                            <option value="Reparación">Reparación</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="sendWhatsAppBtn">Enviar por WhatsApp</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!--DUPLICATING Reactivating for Brands carousel WILL BE IMPROVED-->
 <div class="slider_brands_2">
 	<div class="slide-track_2">
@@ -404,6 +444,15 @@
 			</div>
 		</div>
 	</footer>
+	   <!-- Botón de WhatsApp -->
+    <a href="https://wa.me/3108809817?text=Hola,%20estoy%20interesado%20en%20sus%20servicios" class="whatsapp-btn" target="_blank">
+        <i class="fab fa-whatsapp fa-2x"></i>
+    </a>
+
+    <!-- Botón de llamada -->
+    <a href="tel:+573132031426" class="call-btn">
+        <i class="fas fa-phone fa-2x"></i>
+    </a>
 	<script src="JS/jquery-3.4.1.slim.min.js"></script>
 	<script src="JS/popper.min.js"></script>
 	<script src="JS/bootstrap.min.js"></script>
