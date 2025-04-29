@@ -30,8 +30,8 @@ function enviarMensaje()
 
     // Elige la URL basada en el dispositivo
     const whatsappUrl = mobile 
-        ? `https://api.whatsapp.com/send?phone=+573132031426&text=${texto}`
-        : `https://web.whatsapp.com/send?phone=+573132031426&text=${texto}`;
+        ? `https://api.whatsapp.com/send?phone=+573228927995&text=${texto}`
+        : `https://web.whatsapp.com/send?phone=+573228927995&text=${texto}`;
 
     // Abre la URL en una nueva pestaña
     window.open(whatsappUrl, "_blank");
@@ -63,7 +63,7 @@ $(document).ready(function() {
         const encodedMessage = encodeURIComponent(message);
         
         // Tu número de WhatsApp (reemplaza con el real)
-        const whatsappNumber = '573132031426'; // Ejemplo: número colombiano
+        const whatsappNumber = '573228927995'; // Ejemplo: número colombiano
         
         // Redirigir a WhatsApp
         window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
