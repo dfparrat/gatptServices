@@ -185,6 +185,101 @@
     border-color: #128C7E;
 }
 
+/* ===== CTA STYLES ===== */
+ body {
+	margin: 0;
+	padding: 0;
+	padding-top: 80px;
+}
+
+.whatsapp-cta {
+	position: fixed;
+	top: 30px;
+	left: 30px;
+	background-color: #25D366;
+	color: white;
+	padding: 15px 20px;
+	border-radius: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	text-decoration: none;
+	font-family: Arial, sans-serif;
+	font-weight: bold;
+	z-index: 1000;
+	transition: all 0.3s ease;
+	/* Asegura que no afecte el layout */
+	max-width: 90%;
+	box-sizing: border-box;
+}
+
+.whatsapp-cta:hover {
+	background-color: #128C7E;
+	transform: scale(1.05);
+}
+
+.whatsapp-cta i {
+	font-size: 24px;
+	margin-right: 10px;
+}
+
+.whatsapp-text {
+	display: inline-block;
+	white-space: nowrap;
+}
+@media (max-width: 768px) {
+	body {
+		padding-top: 70px;
+	}
+	
+	.whatsapp-cta {
+		top: 15px;
+		left: 15px;
+		padding: 12px 15px;
+		font-size: 14px;
+	}
+	
+	.whatsapp-cta i {
+		font-size: 20px;
+		margin-right: 8px;
+	}
+}
+
+@media (max-width: 480px) {
+	body {
+		padding-top: 60px;
+	}
+	
+	.whatsapp-cta {
+		top: 10px;
+		left: 10px;
+		padding: 10px 15px;
+		font-size: 12px;
+		width: auto;
+	}
+	
+	.whatsapp-cta i {
+		font-size: 18px;
+		margin-right: 5px;
+	}
+	
+	.whatsapp-text {
+		display: inline;
+	}
+		@media (max-width: 360px) {
+		.whatsapp-text {
+			display: none;
+		}
+		
+		.whatsapp-cta::after {
+			content: "¡Escríbenos!";
+			font-size: 10px;
+			margin-left: 5px;
+		}
+	}
+}
+
   /* ===== slider styles ===== */
 #heroCarousel {
 	height: 50vh;
