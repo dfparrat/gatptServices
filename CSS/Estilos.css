@@ -184,6 +184,15 @@
     background-color: #128C7E;
     border-color: #128C7E;
 }
+.modal-title.long-text {
+	white-space: nowrap;
+	font-size: 1rem;
+}
+@media (max-width: 576px) {
+	.modal-title.long-text {
+		font-size: 0.9rem;
+	}
+}
 
 /* ===== CTA STYLES ===== */
  body {
