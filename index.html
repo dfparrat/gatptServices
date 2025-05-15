@@ -12,6 +12,8 @@
 	<link href="CSS/bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
  </head>
   <body>
 	<header>
@@ -182,9 +184,12 @@
 	</div>
 </div>
 <!-- ===== CTA  ===== -->
+<!-- reCAPTCHA -->
+<div class="g-recaptcha" data-sitekey="6LfQfDorAAAAAE5pFBYWOMHahbjmTERlavXPd2gX" data-callback="onSuccess"></div>
+
 	  <a href="https://wa.me/+573228927995?text=Hola,%20me%20interesa%20obtener%20más%20información" 
 class="whatsapp-cta" 
-target="_blank">
+target="_blank" id="whatsappLink" style="display:none;">
  <i class="fab fa-whatsapp"></i>
  <span class="whatsapp-text">¡Contáctanos por WhatsApp te atendemos hoy mismo!</span>
 </a>
