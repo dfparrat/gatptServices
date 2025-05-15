@@ -80,3 +80,12 @@ $(document).ready(function() {
         $('#welcomeModal').modal('hide');
     }
 });
+//Chaptcha JS
+  function onSuccess() {
+      const phone = "573228927995";
+      const message = "Hola, quiero información";
+      const link = document.getElementById("whatsappLink");
+      
+      link.style.display = "inline-block";
+      link.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    }	
