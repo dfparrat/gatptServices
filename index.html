@@ -183,11 +183,20 @@
 		</Div>
 	</div>
 </div>
+<!-- Widget reCAPTCHA POPUP-->
+	<div id="captcha-popup" class="captcha-container">
+        <div class="captcha-content">
+            <h2>¡Por tu seguridad!</h2>
+            <p>Verifica que no eres un robot para acceder al contenido.</p>
+            <!-- Widget de reCAPTCHA -->
+            <div class="g-recaptcha" 
+                 data-sitekey="6LdahTorAAAAAIVOJCmrTBaAoeQCmxiI06x1EyOM" 
+                 data-callback="onCaptchaSuccess"></div>
+            <button id="close-popup" class="btn-close"><i class="fas fa-times"></i></button>
+        </div>
+    </div>
 <!-- ===== CTA  ===== -->
-<!-- reCAPTCHA -->
-<div class="g-recaptcha" data-sitekey="6LdahTorAAAAAIVOJCmrTBaAoeQCmxiI06x1EyOM" data-callback="onSuccess"></div>
-
-	  <a href="https://wa.me/+573228927995?text=Hola,%20me%20interesa%20obtener%20más%20información" 
+<a href="https://wa.me/+573228927995?text=Hola,%20me%20interesa%20obtener%20más%20información" 
 class="whatsapp-cta" 
 target="_blank" id="whatsappLink" style="display:none;">
  <i class="fab fa-whatsapp"></i>
