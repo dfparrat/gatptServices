@@ -98,7 +98,3 @@ function onCaptchaSuccess(response) {
         document.getElementById("main-content").style.display = "block";
     }
 }
-// Bloquear el acceso directo al contenido (opcional)
-window.onload = function() {
-    document.getElementById("main-content").style.display = "none";
-};
