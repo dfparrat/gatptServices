@@ -84,9 +84,7 @@ $(document).ready(function() {
 // Función al verificar el CAPTCHA
 function onCaptchaSuccess(response) {
     if (response) {
-        // Oculta el popup
         document.getElementById("captcha-popup").style.display = "none";
-        // Muestra el contenido principal
-        document.getElementById("main-content").style.display = "block";
+        document.getElementById("whatsappLink").style.display = "block";
     }
 };
