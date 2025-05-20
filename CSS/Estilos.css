@@ -646,13 +646,15 @@
 .whatsapp-btn {
     background-color: #25D366;
     color: white;
-    bottom: 100px; /* WhatsApp arriba */
+    bottom: 100px;
+	margin: 25px;
 }
 
 .call-btn {
     background-color: #4e73df;
     color: white;
-    bottom: 20px; /* Llamada abajo */
+    bottom: 20px;
+	margin: 25px;
 }
 
 /* Ajustes para móviles - Media query CORREGIDA */
