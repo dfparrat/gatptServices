@@ -647,14 +647,12 @@
     background-color: #25D366;
     color: white;
     bottom: 100px;
-	margin: 25px;
 }
 
 .call-btn {
     background-color: #4e73df;
     color: white;
     bottom: 20px;
-	margin: 25px;
 }
 
 /* Ajustes para móviles - Media query CORREGIDA */
@@ -674,8 +672,8 @@
     }
     
     .whatsapp-btn i, .call-btn i {
-    margin: 25px;
-    padding: 25px;
+    margin: 55px;
+    padding: 55px;
     font-size: 24px;
     line-height: 1;
 	}
