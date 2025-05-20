@@ -89,3 +89,16 @@ $(document).ready(function() {
       link.style.display = "inline-block";
       link.href = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
     }	
+// Función al verificar el CAPTCHA
+function onCaptchaSuccess(response) {
+    if (response) {
+        // Oculta el popup
+        document.getElementById("captcha-popup").style.display = "none";
+        // Muestra el contenido principal
+        document.getElementById("main-content").style.display = "block";
+    }
+}
+// Bloquear el acceso directo al contenido (opcional)
+window.onload = function() {
+    document.getElementById("main-content").style.display = "none";
+};
