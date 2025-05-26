@@ -44,23 +44,29 @@
 	box-shadow: var(--shadow);
 	animation: slidein 2s;
   }
-  
-  #topheader {
-	background-color: var(--light);
-	border-bottom: 2px solid #ddd;
-	padding: 0.5rem 0;
-  }
-  
-  #topheader a {
-	color: var(--text);
-	font-weight: 600;
-	font-size: 0.89rem;
-	transition: var(--transition);
-  }
-  
-  #topheader a:hover {
-	color: var(--primary);
-  }
+  /* ===== Top-Header Styles ===== */
+	#topheader {
+		background-color: var(--light);
+		border-bottom: 2px solid #ddd;
+		padding: 0.5rem 0;
+	}
+
+	#topheader .col-12 {
+		text-align: right;
+	}
+
+	#topheader .col-12 {
+		display: flex;
+		justify-content: flex-end; /* ✅ Pushes links to the right */
+		gap: 10px; /* optional: space between links */
+		flex-wrap: wrap; /* responsive wrapping on small screens */
+		align-items: center; /* vertical alignment */
+	}
+
+
+	#topheader a:hover {
+		color: var(--primary);
+	}
   
   #titulo {
 	font-size: 1.8rem;
