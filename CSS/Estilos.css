@@ -92,7 +92,8 @@
 }
 
 .navbar-nav {
-    align-items: center;
+    align-items: right;
+	margin-left: auto;
 }
 
 .nav-link {
@@ -102,6 +103,9 @@
 	width: 120px;
 	height: auto;
   }
+.navbar-collapse {
+    display: flex !important;
+}
   
   /* ===== Modern Navigation ===== */
   .menu a {
