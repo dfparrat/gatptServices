@@ -669,8 +669,15 @@
     color: white;
     bottom: 20px;
 }
-
-/* Ajustes para móviles - Media query CORREGIDA */
+.whatsapp-btn i, .call-btn i {
+    font-size: 24px;
+    line-height: 1;
+    width: 1em;
+    height: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 @media (max-width: 768px) {
     .whatsapp-btn, .call-btn {
         width: 55px;
@@ -693,8 +700,6 @@
     line-height: 1;
 	}
 }
-
-/* Garantizar visibilidad en todos los dispositivos */
 @media (max-width: 480px) {
     .whatsapp-btn, .call-btn {
         width: 50px;
