@@ -117,11 +117,7 @@
   #topLogo {
 	width: 120px;
 	height: auto;
-  }
-.navbar-collapse {
-    display: flex !important;
-}
-  
+  }  
   /* ===== Modern Navigation ===== */
   .menu a {
 	color: var(--white);
