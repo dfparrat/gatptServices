@@ -660,7 +660,10 @@
     right: 20px;
     text-decoration: none;
 }
-
+#whatsappBtn,
+#callBtn {
+    display: none;
+}
 /* WhatsApp specific */
 .whatsapp-btn {
     background-color: #25D366;
