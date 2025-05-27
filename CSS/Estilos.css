@@ -644,11 +644,14 @@
   
 
   /*====fixed button whatsapp and Phone call====*/
-.whatsapp-btn, .call-btn {
+.whatsapp-btn,
+.call-btn {
     position: fixed;
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    background-color: #25D366; /* default, will be overridden */
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -656,30 +659,28 @@
     z-index: 9999;
     right: 20px;
     transition: all 0.3s ease;
-	text-align: center;
-    line-height: 60px;
-}
-
-.whatsapp-btn {
-    background-color: #25D366;
-    color: white;
-    bottom: 100px;
 }
 
 .call-btn {
     background-color: #4e73df;
-    color: white;
     bottom: 20px;
 }
-.whatsapp-btn i, .call-btn i {
-    font-size: 24px;
-    line-height: 1;
-    width: 1em;
-    height: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+
+.whatsapp-btn {
+    bottom: 100px;
 }
+
+/* Icon styles */
+.whatsapp-btn i,
+.call-btn i {
+    font-size: 26px;
+    line-height: 1;
+    display: inline-block;
+    width: auto;
+    height: auto;
+    vertical-align: middle;
+}
+
 @media (max-width: 768px) {
     .whatsapp-btn, .call-btn {
         width: 55px;
