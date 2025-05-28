@@ -660,8 +660,8 @@
     right: 20px;
     text-decoration: none;
 }
-#whatsappBtn,
-#callBtn {
+.whatsappBtn,
+.callBtn {
     display: none;
 }
 /* WhatsApp specific */
