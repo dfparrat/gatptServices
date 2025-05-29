@@ -86,7 +86,7 @@ function onCaptchaSuccess(response) {
     if (response) {
         document.getElementById("captcha-popup").style.display = "none";
         document.getElementById("whatsappLink").style.display = "block";
-	document.getElementById("whatsappBtn").style.display = "inline-block";
-        document.getElementById("callBtn").style.display = "inline-block";
+	document.getElementById("whatsappBtn").style.display = "flex";
+        document.getElementById("callBtn").style.display = "flex";
     }
 };
