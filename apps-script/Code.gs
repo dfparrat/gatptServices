@@ -45,31 +45,55 @@ function doPost(e) {
   try {
     const payload = parsePayload_(e);
     const action = String(payload.action || '').trim();
+    const requestId = String(payload.requestId || (e && e.parameter && e.parameter.requestId) || '');
+    const responseMode = String(payload.responseMode || (e && e.parameter && e.parameter.responseMode) || '');
 
     if (action !== 'login' && action !== 'health') {
       authenticate_(payload);
     }
 
+    let response;
+
     switch (action) {
       case 'login':
-        return json_(login_(payload));
+        response = login_(payload);
+        break;
       case 'listDrafts':
-        return json_({ ok: true, records: listRecords_() });
+        response = { ok: true, records: listRecords_() };
+        break;
       case 'getRecord':
-        return json_({ ok: true, record: getRecordById_(payload.id_interno) });
+        response = { ok: true, record: getRecordById_(payload.id_interno) };
+        break;
       case 'saveDraft':
-        return json_(saveDraft_(payload));
+        response = saveDraft_(payload);
+        break;
       case 'deleteDraft':
-        return json_(deleteDraft_(payload.id_interno));
+        response = deleteDraft_(payload.id_interno);
+        break;
       case 'approve':
-        return json_(approve_(payload));
+        response = approve_(payload);
+        break;
       case 'health':
-        return json_({ ok: true, message: 'ok' });
+        response = { ok: true, message: 'ok' };
+        break;
       default:
-        return json_({ ok: false, message: 'Acción no soportada.' });
+        response = { ok: false, message: 'Acción no soportada.' };
     }
+
+    if (responseMode === 'postMessage') {
+      return bridge_(requestId, response);
+    }
+
+    return json_(response);
   } catch (error) {
-    return json_({ ok: false, message: error.message || String(error) });
+    const errorResponse = { ok: false, message: error.message || String(error) };
+    const payload = parsePayload_(e);
+    const requestId = String(payload.requestId || (e && e.parameter && e.parameter.requestId) || '');
+    const responseMode = String(payload.responseMode || (e && e.parameter && e.parameter.responseMode) || '');
+    if (responseMode === 'postMessage') {
+      return bridge_(requestId, errorResponse);
+    }
+    return json_(errorResponse);
   }
 }
 
@@ -583,19 +607,59 @@ function normalizeText_(value) {
 }
 
 function parsePayload_(e) {
-  if (!e || !e.postData || !e.postData.contents) {
+  if (!e) {
     return {};
   }
-  try {
-    return JSON.parse(e.postData.contents);
-  } catch (error) {
-    throw new Error('El cuerpo de la solicitud no es JSON válido.');
+
+  if (e.parameter && e.parameter.payload) {
+    try {
+      const parsed = JSON.parse(e.parameter.payload);
+      if (e.parameter.requestId) parsed.requestId = e.parameter.requestId;
+      if (e.parameter.responseMode) parsed.responseMode = e.parameter.responseMode;
+      return parsed;
+    } catch (error) {
+      throw new Error('El payload enviado no es JSON válido.');
+    }
   }
+
+  if (e.postData && e.postData.contents) {
+    try {
+      return JSON.parse(e.postData.contents);
+    } catch (error) {
+      throw new Error('El cuerpo de la solicitud no es JSON válido.');
+    }
+  }
+
+  if (e.parameter) {
+    return { ...e.parameter };
+  }
+
+  return {};
 }
 
 function json_(payload) {
   return ContentService.createTextOutput(JSON.stringify(payload))
     .setMimeType(ContentService.MimeType.JSON);
+}
+
+function bridge_(requestId, payload) {
+  const message = {
+    type: 'gapt-cobro-response',
+    requestId: requestId || '',
+    payload: payload
+  };
+
+  const html = '<!doctype html><html><body><script>' +
+    '(function(){var message=' + safeJsonForScript_(message) + ';' +
+    'window.parent && window.parent.postMessage(message, "*");' +
+    '})();' +
+    '</script></body></html>';
+
+  return HtmlService.createHtmlOutput(html);
+}
+
+function safeJsonForScript_(value) {
+  return JSON.stringify(value).replace(/<\//g, '<\\/');
 }
 
 function escapeHtml_(value) {
