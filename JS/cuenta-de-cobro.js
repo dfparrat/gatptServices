@@ -20,6 +20,7 @@
 	};
 
 	const elements = {
+		authGrid: document.getElementById('authGrid'),
 		loginView: document.getElementById('loginView'),
 		appView: document.getElementById('appView'),
 		loginForm: document.getElementById('loginForm'),
@@ -254,6 +255,7 @@
 		localStorage.removeItem(storageKey);
 		localStorage.removeItem(storageUserKey);
 		elements.sessionLabel.textContent = '—';
+		elements.authGrid.hidden = false;
 		elements.appView.hidden = true;
 		elements.loginView.hidden = false;
 	}
@@ -417,6 +419,7 @@
 		try {
 			const response = await api('login', { username, password });
 			setSession(response.token, response.user || username);
+			elements.authGrid.hidden = true;
 			elements.loginView.hidden = true;
 			elements.appView.hidden = false;
 			resetForm();
@@ -489,6 +492,7 @@
 
 		if (state.token && state.user) {
 			try {
+				elements.authGrid.hidden = true;
 				elements.loginView.hidden = true;
 				elements.appView.hidden = false;
 				elements.sessionLabel.textContent = state.user;
@@ -500,6 +504,7 @@
 		}
 
 		elements.sessionLabel.textContent = '—';
+		elements.authGrid.hidden = false;
 		elements.loginView.hidden = false;
 		elements.appView.hidden = true;
 	}

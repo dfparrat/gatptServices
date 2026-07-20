@@ -1,8 +1,8 @@
 const TIME_ZONE = 'America/Bogota';
 const SHEET_NAME = 'cuentas_de_cobro';
-const SPREADSHEET_ID = 'REEMPLAZAR_CON_ID_DE_LA_GOOGLE_SHEET';
+const SPREADSHEET_ID = '1BS202ubbtfls-d35y_PZYCXCzr6zUgCC51D5eQ6EHRM';
 const WEB_APP_SHARED_PASSWORD = 'GAPT-2026';
-const TOKEN_SECRET = 'REEMPLAZAR_CON_SECRETO_LARGO_Y_UNICO';
+const TOKEN_SECRET = PropertiesService.getScriptProperties().getProperty('TOKEN_SECRET');
 
 // Cambia estos datos aquí si el beneficiario cambia en el futuro.
 const BENEFICIARIO = {
