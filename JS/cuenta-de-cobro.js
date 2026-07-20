@@ -11,13 +11,15 @@
 		maximumFractionDigits: 0
 	});
 
-	const state = {
-		token: localStorage.getItem(storageKey) || '',
-		user: localStorage.getItem(storageUserKey) || '',
-		records: [],
-		currentId: '',
-		approved: false
-	};
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzLW0iqpzHONMT2_lUl9nCfR1vz0uAaaRAfmsLpPZWhOUexJaJNCpKe2GMoxtxlkU/exec';
+
+const state = {
+	token: localStorage.getItem(storageKey) || '',
+	user: localStorage.getItem(storageUserKey) || '',
+	records: [],
+	currentId: '',
+	approved: false
+};
 
 	const pendingRequests = new Map();
 	let requestSequence = 0;
