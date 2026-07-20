@@ -19,6 +19,9 @@
 		approved: false
 	};
 
+	const pendingRequests = new Map();
+	let requestSequence = 0;
+
 	const elements = {
 		authGrid: document.getElementById('authGrid'),
 		loginView: document.getElementById('loginView'),
@@ -52,6 +55,29 @@
 		responsableIva: document.getElementById('responsable_iva'),
 		garantia: document.getElementById('garantia')
 	};
+
+	window.addEventListener('message', (event) => {
+		const data = event.data || {};
+		if (data.type !== 'gapt-cobro-response' || !data.requestId) {
+			return;
+		}
+
+		const pending = pendingRequests.get(data.requestId);
+		if (!pending) {
+			return;
+		}
+
+		pendingRequests.delete(data.requestId);
+		pending.cleanup();
+
+		const response = data.payload || {};
+		if (!response.ok) {
+			pending.reject(new Error(response.message || 'La operación no pudo completarse.'));
+			return;
+		}
+
+		pending.resolve(response);
+	});
 
 	const sharedDraftGuarantee = 'Garantía Servicio prestado de 12 Meses por daños no relacionados a daño físico o daños por humedad';
 
@@ -218,24 +244,66 @@
 			throw new Error('Primero debes configurar la URL del Web App en cuenta-de-cobro.html.');
 		}
 
-		const response = await fetch(appUrl, {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json'
-			},
-			body: JSON.stringify({
+		const requestId = 'req_' + Date.now() + '_' + (++requestSequence);
+		const iframe = document.createElement('iframe');
+		iframe.name = 'gaptCobroFrame_' + requestId;
+		iframe.style.display = 'none';
+		document.body.appendChild(iframe);
+
+		const form = document.createElement('form');
+		form.method = 'POST';
+		form.action = appUrl;
+		form.target = iframe.name;
+		form.style.display = 'none';
+
+		const fields = {
+			requestId,
+			responseMode: 'postMessage',
+			payload: JSON.stringify({
 				action,
 				token: state.token,
 				username: state.user,
 				...data
 			})
+		};
+
+		Object.entries(fields).forEach(([name, value]) => {
+			const input = document.createElement('input');
+			input.type = 'hidden';
+			input.name = name;
+			input.value = value;
+			form.appendChild(input);
 		});
 
-		const json = await response.json();
-		if (!json.ok) {
-			throw new Error(json.message || 'La operación no pudo completarse.');
-		}
-		return json;
+		const cleanup = () => {
+			form.remove();
+			iframe.remove();
+		};
+
+		return new Promise((resolve, reject) => {
+			const timeoutId = window.setTimeout(() => {
+				pendingRequests.delete(requestId);
+				cleanup();
+				reject(new Error('La solicitud tardó demasiado en responder.'));
+			}, 30000);
+
+			pendingRequests.set(requestId, {
+				resolve: (response) => {
+					window.clearTimeout(timeoutId);
+					cleanup();
+					resolve(response);
+				},
+				reject: (error) => {
+					window.clearTimeout(timeoutId);
+					cleanup();
+					reject(error);
+				},
+				cleanup
+			});
+
+			document.body.appendChild(form);
+			form.submit();
+		});
 	}
 
 	function setSession(token, user) {
