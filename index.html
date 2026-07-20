@@ -16,9 +16,9 @@
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
  </head>
-  <body>
+  <body id="main-content">
 	<header>
-<div class="p-1" id="topheader">
+		<div class="p-1" id="topheader">
 			<div class="col-12">
 						<a class="whatsapp-link" target="_blank" title="Contact Us On WhatsApp" 
 						   href="https://wa.me/573102692560?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento." 
@@ -44,12 +44,15 @@
 						<img id="topLogo" class="img-fluid" src="IMG/Logo_sample_NOBG_GRIS.png" alt="Logo">
 					</a>-->
 					<button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#NavbarMenu">
-					<span class="navbar-toggler-icon"></span>
+  					<span class="navbar-toggler-icon"></span>
 					</button>
 					<div class="collapse navbar-collapse" id="NavbarMenu">
 					<ul class="navbar-nav">
 						<li class="nav-item active">
-							<a class="nav-link" href="index.html">Inicio</a>
+							<a class="nav-link" href="Comenzando.html">Inicio</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="cuenta-de-cobro.html">Cuenta de cobro</a>
 						</li>
 						<!--<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle" data-toggle="dropdown" role="button" href="#">Servicios</a>
@@ -61,7 +64,7 @@
 						</li>-->
 						<li class="nav-item">
 							<a class="nav-link" target="_blank" title="Contact Us On WhatsApp" 
-						   href="https://wa.me/573102692560?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento...">Contactanos</a>
+						   href="https://wa.me/573132031426?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento...">Contactanos</a>
 						</li>
 						<!--Deactivating temp-->
 						<!--<li class="nav-item">
@@ -73,15 +76,16 @@
 			</div>
 		</div>
 	</header>
-<!-- Popup de Bienvenida -->
+
+<!-- Popup de Bienvenida TEMP DEACTIVATED -->
 <!--<div class="modal fade" id="welcomeModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header d-flex flex-column align-items-start">
-		<h5 class="modal-title long-text">¡Bienvenido Contactanos y te atendemos de inmediato!</h5>
-		<h5 class="modal-title">¡Revisión técnica hoy mismo!</h5>	
-		<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		</div>
+				<h5 class="modal-title long-text">¡Bienvenido Contactanos y te atendemos de inmediato!</h5>
+				<h5 class="modal-title">¡Revisión técnica hoy mismo!</h5>	
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
             <div class="modal-body">
                 <form id="welcomeForm">
                     <div class="mb-3">
@@ -175,7 +179,7 @@
 	</div>
 </div>
 <!-- Widget reCAPTCHA -->
-	<div id="captcha-popup" class="captcha-container">
+	<!-- <div id="captcha-popup" class="captcha-container">
         <div class="captcha-content">
             <h2>¡Por tu seguridad!</h2>
             <p>Verifica que no eres un robot para acceder al contenido.</p>
@@ -184,13 +188,13 @@
                  data-callback="onCaptchaSuccess"></div>
             <button id="close-popup" class="btn-close"><i class="fas fa-times"></i></button>
         </div>
-    </div>
+    </div>-->
 <!--CALL TO ACTION-->
 <a href="https://wa.me/+573102692560?text=Hola,%20me%20interesa%20obtener%20más%20información" id="whatsappLink" class="whatsapp-cta" target="_blank" style="display:none;">
  <i class="fab fa-whatsapp"></i>
  <span class="whatsapp-text">¡Contáctanos por WhatsApp te atendemos hoy mismo!</span>
 </a>
-<!-- ===== Slider Profesional GAP ===== -->
+		<!-- ===== Slider Profesional GAP ===== -->
 <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4000">
 	<div class="carousel-inner">
 	  
@@ -200,7 +204,7 @@
 		<div class="carousel-caption">
 		  <h5>¡Atención 24/7!</h5>
 		  <p>Profesionales listos para ayudarte en cualquier momento</p>
-		  <a href="https://wa.me/573102692560?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento." target="_blank" class="btn btn-success mt-2">
+		  <a href="https://wa.me/573228927995?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento." target="_blank" class="btn btn-success mt-2">
 			Escríbenos por WhatsApp
 		  </a>
 		</div>
@@ -212,7 +216,7 @@
 		<div class="carousel-caption">
 		  <h5>Mantenimiento con Garantía</h5>
 		  <p>Más de 6 meses de respaldo en todos nuestros servicios</p>
-		  <a href="https://wa.me/573102692560?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento." target="_blank" class="btn btn-success mt-2">
+		  <a href="https://wa.me/573228927995?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento."  target="_blank" class="btn btn-success mt-2">
 			¡Contáctanos ahora!
 		  </a>
 		</div>
@@ -224,14 +228,12 @@
 		<div class="carousel-caption">
 		  <h5>3 años de experiencia</h5>
 		  <p>Certificados por las principales marcas de calentadores</p>
-		  <a href="https://wa.me/573102692560?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento." target="_blank" class="btn btn-success mt-2">
+		  <a href="https://wa.me/573228927995?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento." target="_blank" class="btn btn-success mt-2">
 			Escríbenos por WhatsApp
 		  </a>
 		</div>
 	  </div>
-  
 	</div>
-  
 	<!-- Controles del slider -->
 	<button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
 	  <span class="carousel-control-prev-icon"></span>
@@ -239,7 +241,8 @@
 	<button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
 	  <span class="carousel-control-next-icon"></span>
 	</button>
-  </div>
+</div>
+<!-- Whatsapp Form -->
   <section class="Middle-body-2">
 	<div class="container-fluid" id="Mbody-2">
 		<div class="row">
@@ -409,7 +412,7 @@
 		<div class="container-fluid top-footer p-2">
 			<div class="row">
 				<div class="col-md-2">
-					<!--<img class="img-fluid" src="IMG/Logo_sample_NOBG_GRIS.png" alt="Logo No background">-->
+					<img class="img-fluid" src="IMG/Logo_sample_NOBG_GRIS.png" alt="Logo No background">
 					<p style="color: white;">
 						Somos un equipo de tecnicos especializados en el mantenimiento de Calentadores y más <a href="Servicios.html" target="_blank">¡Conocenos dando click aqui!</a> 
 					</p>
@@ -430,18 +433,18 @@
 				</div>
 				<div class="col-md-3">
 					<h4 style="color: white;">Contactanos</h4>
-					<a class="p-1" target="_blank" title="Contact Us On WhatsApp"  href="https://wa.me/573102692560?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento..." >
+					<a class="p-1" target="_blank" title="Contact Us On WhatsApp"  href="https://wa.me/573132031426?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento..." >
 						<i class="bi bi-whatsapp"></i>
-						3102692560 <br>
+						3132031426 <br>
 					</a>
 					<a class="p-1" href="mailto:gp042792@gmail.com" target="_blank"> <i class="bi bi-envelope"></i>gp042792@gmail.com</a><br>
-					<a class="p-1" target="_blank" title="Call Us" href="tel:+573102692560" >
+					<a class="p-1" target="_blank" title="Call Us" href="tel:+573132031426" >
 						<i class="bi bi-telephone-outbound-fill"></i>
-						+57 3102692560
+						+57 3132031426
 					</a><br>
-					<!--<a href="#" class="p-1" target="_blank">Facebook</a>-->
-					<a href="https://www.instagram.com/gaptservicios/" class="p-1" target="_blank">Instagram</a>
-					<a href="https://www.tiktok.com/@gapt_services" class="p-1" target="_blank">TikTok</a>
+					<a href="#" class="p-1" target="_blank">Facebook</a>
+					<a href="#" class="p-1" target="_blank">Instagram</a>
+					<a href="#" class="p-1" target="_blank">TikTok</a>
 					
 				</div>
 			</div>
@@ -454,15 +457,17 @@
 			</div>
 		</div>
 	</footer>
-<!-- Fixed Botón de WhatsApp -->
+<!-- Botón de WhatsApp -->
 <a href="https://wa.me/+573102692560?text=Hola,%20estoy%20interesado%20en%20sus%20servicios" 
-   class="circle-btn whatsapp-btn" 
-   target="_blank" id="whatsappBtn">
+   class="whatsapp-btn" 
+   id="whatsappBtn" 
+   target="_blank">
     <i class="fab fa-whatsapp"></i>
 </a>
-<!-- Fixed Botón de Call -->
+<!-- Botón de llamada -->
 <a href="tel:+573102692560" 
-   class="circle-btn call-btn" id="callBtn">
+   class="call-btn" 
+   id="callBtn">
     <i class="fas fa-phone"></i>
 </a>
 	<script src="JS/jquery-3.4.1.slim.min.js"></script>
@@ -470,6 +475,8 @@
 	<script src="JS/bootstrap.min.js"></script>
 	<script src="JS/BackEnd.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
   </body>
   <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-16999947460">

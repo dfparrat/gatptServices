@@ -44,8 +44,7 @@
 	box-shadow: var(--shadow);
 	animation: slidein 2s;
   }
-
-/* ===== Top-Header Styles ===== */
+		/* ===== Top-Header Styles ===== */
 	#topheader {
 		background-color: var(--light);
 		border-bottom: 2px solid #ddd;
@@ -76,6 +75,7 @@
         gap: 5px;
     }
 	}
+
   
   #titulo {
 	font-size: 1.8rem;
@@ -83,11 +83,11 @@
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
   }
   
+  /* ===== Top-Header Styles ===== */
   #bottomheader {
-    /* Altura base */
     height: 70px;
     display: flex;
-    align-items: center;
+	justify-content: flex-end;
     background-color: #000;
     transition: height 0.3s ease;
 }
@@ -117,7 +117,8 @@
   #topLogo {
 	width: 120px;
 	height: auto;
-  }  
+  }
+  
   /* ===== Modern Navigation ===== */
   .menu a {
 	color: var(--white);
@@ -209,10 +210,11 @@
 	}
 }
 
-/* ===== CTA STYLES ===== */
+ /* ===== CTA STYLES ===== */
  body {
 	margin: 0;
 	padding: 0;
+	/* Añade espacio para el botón en móviles */
 	padding-top: 80px;
 }
 
@@ -233,7 +235,6 @@
 	font-weight: bold;
 	z-index: 1000;
 	transition: all 0.3s ease;
-	/* Asegura que no afecte el layout */
 	max-width: 90%;
 	box-sizing: border-box;
 }
@@ -252,6 +253,8 @@
 	display: inline-block;
 	white-space: nowrap;
 }
+
+/* Estilos responsivos */
 @media (max-width: 768px) {
 	body {
 		padding-top: 70px;
@@ -291,7 +294,9 @@
 	.whatsapp-text {
 		display: inline;
 	}
-		@media (max-width: 360px) {
+	
+	/* Opcional: Mostrar solo icono en móviles muy pequeños */
+	@media (max-width: 360px) {
 		.whatsapp-text {
 			display: none;
 		}
@@ -337,8 +342,7 @@
     color: #7f8c8d;
     margin-bottom: 20px;
 }
-
-  /* ===== slider styles ===== */
+ /* ===== slider styles ===== */
 #heroCarousel {
 	height: 50vh;
 	min-height: 300px;
@@ -643,66 +647,60 @@
   }
   
 
-  /*====fixed button whatsapp and Phone call====*/
-/* Shared base for both buttons */
-.circle-btn {
+  /*=====fixed button whatsapp and Phone call=====*/
+.whatsapp-btn, .call-btn {
     position: fixed;
     width: 60px;
     height: 60px;
     border-radius: 50%;
-    display: flex;
-    justify-content: center;
+    display: flex; 
     align-items: center;
-    color: white;
-    z-index: 9999;
+    justify-content: center;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
+    z-index: 9999;
     right: 20px;
-    text-decoration: none;
+    transition: all 0.3s ease;
+	text-align: center;
+    line-height: 60px;
 }
-#whatsappBtn, #callBtn {
-display: None;
-}
-/* WhatsApp specific */
+
 .whatsapp-btn {
     background-color: #25D366;
+    color: white;
     bottom: 100px;
 }
 
-/* Call specific */
 .call-btn {
     background-color: #4e73df;
+    color: white;
     bottom: 20px;
 }
-
-/* Icon sizing and alignment */
-.circle-btn i {
-    font-size: 26px;
+.whatsapp-btn i, .call-btn i {
+    font-size: 24px; 
     line-height: 1;
-    display: block;
-    width: 100%;
-    text-align: center;
+    width: 1em;
+    height: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-
 @media (max-width: 768px) {
-    .circle-btn {
-        width: 50px;
-        height: 50px;
+    .whatsapp-btn, .call-btn {
+        width: 55px;
+        height: 55px;
         right: 15px;
     }
-
-    .circle-btn i {
-        font-size: 22px;
-    }
-
     .whatsapp-btn {
         bottom: 90px;
     }
-
     .call-btn {
         bottom: 15px;
     }
+    .whatsapp-btn i,
+	.call-btn i {
+    font-size: 24px;
+    line-height: 1;
+	}
 }
 @media (max-width: 480px) {
     .whatsapp-btn, .call-btn {

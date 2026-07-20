@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="robots" content="noindex, nofollow">
+	<meta name="author" content="GAPT Servicios">
+	<title>Cuenta de Cobro Interna | GAPT Servicios</title>
+	<link rel="stylesheet" href="CSS/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="CSS/cuenta-de-cobro.css">
+</head>
+<body class="gapt-admin-body">
+	<main class="admin-shell">
+		<section class="admin-hero card-panel">
+			<div class="hero-copy">
+				<span class="eyebrow">Administración interna</span>
+				<h1>Generador de Cuenta de Cobro</h1>
+				<p>
+					Borradores editables, aprobación con consecutivo único, PDF automático y envío por correo.
+				</p>
+			</div>
+			<div class="hero-badges">
+				<div class="badge-chip">No index</div>
+				<div class="badge-chip">Google Sheets</div>
+				<div class="badge-chip">Apps Script</div>
+			</div>
+		</section>
+
+		<section id="loginView" class="card-panel login-panel">
+			<div class="panel-title">
+				<h2>Acceso restringido</h2>
+				<p>Ingresa con uno de los usuarios autorizados.</p>
+			</div>
+			<form id="loginForm" class="grid-form">
+				<label>
+					<span>Usuario</span>
+					<input id="loginUser" name="loginUser" type="text" autocomplete="username" required placeholder="Gustavo Parra o Duvi">
+				</label>
+				<label>
+					<span>Clave compartida</span>
+					<input id="loginPassword" name="loginPassword" type="password" autocomplete="current-password" required placeholder="Clave interna">
+				</label>
+				<button class="action-btn primary" type="submit">Entrar</button>
+			</form>
+			<p class="microcopy">La página queda protegida por login simple y además marcada como noindex.</p>
+		</section>
+
+		<section id="appView" class="app-grid" hidden>
+			<aside class="card-panel side-panel">
+				<div class="panel-title compact">
+					<h2>Sesión activa</h2>
+					<p id="sessionLabel">—</p>
+				</div>
+				<div class="summary-box">
+					<div class="summary-label">Estado del borrador</div>
+					<div id="draftStatePill" class="summary-pill">Borrador</div>
+				</div>
+				<div class="summary-box">
+					<div class="summary-label">Consecutivo</div>
+					<div id="consecutiveLabel" class="summary-value">Pendiente</div>
+				</div>
+				<div class="summary-box">
+					<div class="summary-label">Beneficiario</div>
+					<div class="summary-value small">
+						Gustavo Adolfo Parra Trujillo<br>
+						CC 1.019.014.761<br>
+						Nequi 3228927995
+					</div>
+				</div>
+				<div class="side-actions">
+					<button id="newDraftBtn" class="action-btn secondary" type="button">Nuevo borrador</button>
+					<button id="logoutBtn" class="action-btn ghost" type="button">Cerrar sesión</button>
+				</div>
+			</aside>
+
+			<section class="card-panel form-panel">
+				<div class="panel-title compact">
+					<h2>Datos de la cuenta</h2>
+					<p>Completa el formulario, guarda el borrador y aprueba cuando esté listo.</p>
+				</div>
+				<div id="alertBox" class="alert-box" hidden></div>
+				<form id="accountForm" class="account-form" autocomplete="off">
+					<input type="hidden" id="recordId" name="recordId">
+					<div class="section-card">
+						<h3>Contratante</h3>
+						<div class="grid-form cols-2">
+							<label><span>Nombre completo</span><input id="contratante_nombre" required></label>
+							<label><span>Cédula</span><input id="contratante_cedula" required></label>
+							<label><span>Email</span><input id="contratante_email" type="email" required></label>
+							<label><span>Celular</span><input id="contratante_celular" required></label>
+							<label><span>Forma de pago</span><input id="contratante_forma_pago" required placeholder="Nequi, transferencia, efectivo"></label>
+							<label><span>Fecha de pago</span><input id="contratante_fecha_pago" required placeholder="Ej. 20/07/2026"></label>
+							<label class="span-2"><span>Proyecto (opcional)</span><input id="contratante_proyecto" placeholder="Nombre de edificio o administración"></label>
+							<label class="checkbox-field span-2">
+								<input id="responsable_iva" type="checkbox">
+								<span>Responsable de IVA</span>
+							</label>
+						</div>
+					</div>
+
+					<div class="section-card">
+						<div class="section-head">
+							<h3>Servicios</h3>
+							<button id="addServiceBtn" class="action-btn secondary small-btn" type="button">Agregar servicio</button>
+						</div>
+						<div class="table-wrap">
+							<table class="services-table">
+								<thead>
+									<tr>
+										<th>Concepto</th>
+										<th>Descripción</th>
+										<th>Cantidad</th>
+										<th>Valor unitario</th>
+										<th>Total</th>
+										<th></th>
+									</tr>
+								</thead>
+								<tbody id="servicesBody"></tbody>
+							</table>
+						</div>
+					</div>
+
+					<div class="section-card totals-card">
+						<div class="grid-form cols-3 totals-grid">
+							<div class="metric-box">
+								<span>Total valor facturado</span>
+								<strong id="totalFacturado">$0</strong>
+							</div>
+							<label>
+								<span>Total abono</span>
+								<input id="total_abono" type="number" min="0" step="1" value="0" required>
+							</label>
+							<div class="metric-box">
+								<span>Total valor pendiente</span>
+								<strong id="totalPendiente">$0</strong>
+							</div>
+						</div>
+					</div>
+
+					<div class="section-card">
+						<h3>Garantía y nota legal</h3>
+						<div class="grid-form cols-1">
+							<label>
+								<span>Garantía</span>
+								<textarea id="garantia" rows="3"></textarea>
+							</label>
+							<div class="readonly-note">
+								<span>Texto legal fijo</span>
+								<p>Por favor abstenerse de hacer retención en la fuente, estos valores son declarados por contador personal</p>
+							</div>
+						</div>
+					</div>
+
+					<div class="action-row">
+						<button id="saveDraftBtn" class="action-btn secondary" type="submit">Guardar borrador</button>
+						<button id="approveBtn" class="action-btn primary" type="button">Aprobar y enviar</button>
+					</div>
+				</form>
+			</section>
+
+			<section class="card-panel records-panel">
+				<div class="panel-title compact">
+					<h2>Registros</h2>
+					<p>Borradores editables y cuentas ya aprobadas.</p>
+				</div>
+				<div class="table-wrap">
+					<table class="records-table">
+						<thead>
+							<tr>
+								<th>No.</th>
+								<th>Contratante</th>
+								<th>Estado</th>
+								<th>Creación</th>
+								<th>Acciones</th>
+							</tr>
+						</thead>
+						<tbody id="recordsBody"></tbody>
+					</table>
+				</div>
+			</section>
+		</section>
+	</main>
+
+	<script>
+		window.GAPT_COBRO_CONFIG = {
+			appUrl: 'REEMPLAZAR_CON_URL_DEL_WEB_APP_DE_APPS_SCRIPT',
+			organizationEmail: 'gaptservicios@gmail.com'
+		};
+	</script>
+	<script src="JS/cuenta-de-cobro.js"></script>
+</body>
+</html>
