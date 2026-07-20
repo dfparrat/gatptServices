@@ -20,29 +20,62 @@
 				</p>
 			</div>
 			<div class="hero-badges">
-				<div class="badge-chip">No index</div>
-				<div class="badge-chip">Google Sheets</div>
-				<div class="badge-chip">Apps Script</div>
+				<a class="badge-chip badge-link badge-link-whatsapp" target="_blank" title="Contact Us On WhatsApp" 
+				   href="https://wa.me/573123077502?text=¡Hola!%20Quisiera%20saber%20más%20del%20servicio%20de%20mantenimiento."
+				   id="whatsapplink">
+					<i class="bi bi-whatsapp"></i>
+					Contacto Administrador
+				</a>
+				<a class="badge-chip badge-link" href="index.html">Inicio</a>
 			</div>
 		</section>
 
-		<section id="loginView" class="card-panel login-panel">
-			<div class="panel-title">
-				<h2>Acceso restringido</h2>
-				<p>Ingresa con uno de los usuarios autorizados.</p>
-			</div>
-			<form id="loginForm" class="grid-form">
-				<label>
-					<span>Usuario</span>
-					<input id="loginUser" name="loginUser" type="text" autocomplete="username" required placeholder="Gustavo Parra o Duvi">
-				</label>
-				<label>
-					<span>Clave compartida</span>
-					<input id="loginPassword" name="loginPassword" type="password" autocomplete="current-password" required placeholder="Clave interna">
-				</label>
-				<button class="action-btn primary" type="submit">Entrar</button>
-			</form>
-			<p class="microcopy">La página queda protegida por login simple y además marcada como noindex.</p>
+		<section class="auth-grid">
+			<section id="loginView" class="card-panel login-panel">
+				<div class="panel-title">
+					<h2>Acceso restringido</h2>
+					<p>Ingresa con uno de los usuarios autorizados.</p>
+				</div>
+				<form id="loginForm" class="grid-form">
+					<label>
+						<span>Usuario</span>
+						<input id="loginUser" name="loginUser" type="text" autocomplete="username" required placeholder="User Name">
+					</label>
+					<label>
+						<span>Clave</span>
+						<input id="loginPassword" name="loginPassword" type="password" autocomplete="current-password" required placeholder="Clave interna">
+					</label>
+					<button class="action-btn primary" type="submit">Entrar</button>
+				</form>
+				<p class="microcopy">La página queda protegida por login simple y además marcada como noindex.</p>
+			</section>
+
+			<aside class="card-panel login-brand-panel" aria-label="Panel de marca">
+				<div class="brand-art">
+					<img src="IMG/Logo sample.JPG" alt="Logo GPARRAT">
+				</div>
+				<div class="brand-copy">
+					<span class="eyebrow eyebrow-dark">GPARRAT</span>
+					<h2>Control interno con imagen profesional</h2>
+					<p>
+						Registro claro, aprobación segura y una interfaz más cómoda para trabajar todos los días.
+					</p>
+				</div>
+				<div class="brand-features">
+					<div class="feature-pill">
+						<i class="bi bi-shield-lock-fill"></i>
+						Acceso privado
+					</div>
+					<div class="feature-pill">
+						<i class="bi bi-file-earmark-pdf-fill"></i>
+						PDF automático
+					</div>
+					<div class="feature-pill">
+						<i class="bi bi-envelope-paper-fill"></i>
+						Envío por correo
+					</div>
+				</div>
+			</aside>
 		</section>
 
 		<section id="appView" class="app-grid" hidden>
