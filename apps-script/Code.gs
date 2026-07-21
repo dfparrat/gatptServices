@@ -3,6 +3,10 @@ const SHEET_NAME = 'cuentas_de_cobro';
 const SPREADSHEET_ID = '1BS202ubbtfls-d35y_PZYCXCzr6zUgCC51D5eQ6EHRM';
 const WEB_APP_SHARED_PASSWORD = 'GAPT-2026';
 const TOKEN_SECRET = PropertiesService.getScriptProperties().getProperty('TOKEN_SECRET');
+const WHATSAPP_TO = '573228927995';
+const WHATSAPP_GRAPH_VERSION = 'v21.0';
+const WHATSAPP_PHONE_NUMBER_ID = PropertiesService.getScriptProperties().getProperty('WHATSAPP_PHONE_NUMBER_ID');
+const WHATSAPP_ACCESS_TOKEN = PropertiesService.getScriptProperties().getProperty('WHATSAPP_ACCESS_TOKEN');
 
 // Cambia estos datos aquí si el beneficiario cambia en el futuro.
 const BENEFICIARIO = {
@@ -36,65 +40,83 @@ const HEADERS = [
   'garantia'
 ];
 
-function doGet() {
-  return ContentService.createTextOutput(JSON.stringify({ ok: true, message: 'Cuenta de cobro API operativa' }))
-    .setMimeType(ContentService.MimeType.JSON);
-}
-
-function doPost(e) {
+function doGet(e) {
   try {
     const payload = parsePayload_(e);
-    const action = String(payload.action || '').trim();
     const requestId = String(payload.requestId || (e && e.parameter && e.parameter.requestId) || '');
     const responseMode = String(payload.responseMode || (e && e.parameter && e.parameter.responseMode) || '');
+    const callback = String(payload.callback || (e && e.parameter && e.parameter.callback) || '');
 
-    if (action !== 'login' && action !== 'health') {
-      authenticate_(payload);
-    }
-
-    let response;
-
-    switch (action) {
-      case 'login':
-        response = login_(payload);
-        break;
-      case 'listDrafts':
-        response = { ok: true, records: listRecords_() };
-        break;
-      case 'getRecord':
-        response = { ok: true, record: getRecordById_(payload.id_interno) };
-        break;
-      case 'saveDraft':
-        response = saveDraft_(payload);
-        break;
-      case 'deleteDraft':
-        response = deleteDraft_(payload.id_interno);
-        break;
-      case 'approve':
-        response = approve_(payload);
-        break;
-      case 'health':
-        response = { ok: true, message: 'ok' };
-        break;
-      default:
-        response = { ok: false, message: 'Acción no soportada.' };
-    }
-
-    if (responseMode === 'postMessage') {
-      return bridge_(requestId, response);
-    }
-
-    return json_(response);
+    const response = executeAction_(payload);
+    return formatResponse_(responseMode, requestId, callback, response);
   } catch (error) {
     const errorResponse = { ok: false, message: error.message || String(error) };
     const payload = parsePayload_(e);
     const requestId = String(payload.requestId || (e && e.parameter && e.parameter.requestId) || '');
     const responseMode = String(payload.responseMode || (e && e.parameter && e.parameter.responseMode) || '');
-    if (responseMode === 'postMessage') {
-      return bridge_(requestId, errorResponse);
-    }
-    return json_(errorResponse);
+    const callback = String(payload.callback || (e && e.parameter && e.parameter.callback) || '');
+    return formatResponse_(responseMode, requestId, callback, errorResponse);
   }
+}
+
+function doPost(e) {
+  try {
+    const payload = parsePayload_(e);
+    const requestId = String(payload.requestId || (e && e.parameter && e.parameter.requestId) || '');
+    const responseMode = String(payload.responseMode || (e && e.parameter && e.parameter.responseMode) || '');
+    const callback = String(payload.callback || (e && e.parameter && e.parameter.callback) || '');
+
+    const response = executeAction_(payload);
+    return formatResponse_(responseMode, requestId, callback, response);
+  } catch (error) {
+    const errorResponse = { ok: false, message: error.message || String(error) };
+    const payload = parsePayload_(e);
+    const requestId = String(payload.requestId || (e && e.parameter && e.parameter.requestId) || '');
+    const responseMode = String(payload.responseMode || (e && e.parameter && e.parameter.responseMode) || '');
+    const callback = String(payload.callback || (e && e.parameter && e.parameter.callback) || '');
+    return formatResponse_(responseMode, requestId, callback, errorResponse);
+  }
+}
+
+function executeAction_(payload) {
+  const action = String(payload.action || '').trim();
+
+  if (!action) {
+    return { ok: true, message: 'Cuenta de cobro API operativa' };
+  }
+
+  if (action !== 'login' && action !== 'health') {
+    authenticate_(payload);
+  }
+
+  switch (action) {
+    case 'login':
+      return login_(payload);
+    case 'listDrafts':
+      return { ok: true, records: listRecords_() };
+    case 'getRecord':
+      return { ok: true, record: getRecordById_(payload.id_interno) };
+    case 'saveDraft':
+      return saveDraft_(payload);
+    case 'deleteDraft':
+      return deleteDraft_(payload.id_interno);
+    case 'approve':
+      return approve_(payload);
+    case 'health':
+      return { ok: true, message: 'ok' };
+    default:
+      return { ok: false, message: 'Acción no soportada.' };
+  }
+}
+
+function formatResponse_(responseMode, requestId, callback, payload) {
+  if (responseMode === 'postMessage') {
+    return bridge_(requestId, payload);
+  }
+  if (responseMode === 'jsonp') {
+    return jsonp_(callback, payload);
+  }
+  return json_(payload);
 }
 
 function login_(payload) {
@@ -269,11 +291,13 @@ function approve_(payload) {
 
     const pdfBlob = generatePdf_(record);
     sendApprovalEmail_(record, pdfBlob);
+    const whatsappResult = sendApprovalWhatsApp_(record, pdfBlob);
 
     return {
       ok: true,
-      message: 'Cuenta aprobada y enviada.',
-      record: getRecordById_(record.id_interno)
+      message: 'Cuenta aprobada, enviada por correo y WhatsApp.',
+      record: getRecordById_(record.id_interno),
+      whatsapp_message_id: whatsappResult.messageId
     };
   } finally {
     lock.releaseLock();
@@ -425,6 +449,7 @@ function generatePdf_(record) {
     '.footer-block{margin-top:18px;font-size:11px;line-height:1.6;} ',
     '.signature{margin-top:38px;display:flex;justify-content:space-between;gap:20px;align-items:flex-end;} ',
     '.line{width:44%;border-top:1px solid #111;padding-top:6px;text-align:center;font-size:11px;} ',
+    '.signed-name{font-family:"STXingkai","KaiTi","STKaiti","DFKai-SB",serif;font-size:18px;line-height:1.1;margin-bottom:4px;} ',
     '.muted{font-size:10px;color:#333;} ',
     '</style></head><body>',
     '<div class="sheet">',
@@ -461,7 +486,7 @@ function generatePdf_(record) {
     '</table>',
     '<div class="footer-block"><strong>Garantía:</strong> ' + escapeHtml_(record.garantia || DEFAULT_GUARANTEE) + '<br><strong>Nota legal:</strong> ' + escapeHtml_(LEGAL_TEXT) + '</div>',
     '<div class="footer-block"><strong>Datos de pago:</strong> ' + escapeHtml_(BENEFICIARIO.cuentaPago) + '</div>',
-    '<div class="signature"><div class="line">Firma recibido</div><div class="line">Autorizado por GAPT Servicios</div></div>',
+    '<div class="signature"><div class="line">Firma recibido</div><div class="line"><div class="signed-name">Gustavo Parra Trujillo</div>Autorizado por GAPT Servicios</div></div>',
     '<div class="muted">Documento generado automáticamente por el sistema interno de cuentas de cobro.</div>',
     '</div></body></html>'
   ].join('');
@@ -495,6 +520,99 @@ function sendApprovalEmail_(record, pdfBlob) {
       name: 'GAPT Servicios'
     }
   );
+}
+
+function sendApprovalWhatsApp_(record, pdfBlob) {
+  if (!WHATSAPP_PHONE_NUMBER_ID || !WHATSAPP_ACCESS_TOKEN) {
+    throw new Error('Falta configurar WHATSAPP_PHONE_NUMBER_ID y WHATSAPP_ACCESS_TOKEN en Script Properties.');
+  }
+
+  const to = normalizePhone_(WHATSAPP_TO);
+  const fileName = 'Cuenta-de-Cobro-No-' + record.numero_consecutivo + '.pdf';
+  const uploadUrl = 'https://graph.facebook.com/' + WHATSAPP_GRAPH_VERSION + '/' + WHATSAPP_PHONE_NUMBER_ID + '/media';
+  const mediaBlob = pdfBlob.copyBlob().setName(fileName);
+
+  const uploadResponse = UrlFetchApp.fetch(uploadUrl, {
+    method: 'post',
+    headers: {
+      Authorization: 'Bearer ' + WHATSAPP_ACCESS_TOKEN
+    },
+    payload: {
+      messaging_product: 'whatsapp',
+      file: mediaBlob
+    },
+    muteHttpExceptions: true
+  });
+
+  const uploadStatus = uploadResponse.getResponseCode();
+  const uploadText = uploadResponse.getContentText();
+  const uploadData = parseJsonSafe_(uploadText);
+  const mediaId = uploadData && uploadData.id;
+
+  if (!(uploadStatus >= 200 && uploadStatus < 300) || !mediaId) {
+    throw new Error('No se pudo subir el PDF a WhatsApp. Código ' + uploadStatus + '. Respuesta: ' + uploadText);
+  }
+
+  const messageUrl = 'https://graph.facebook.com/' + WHATSAPP_GRAPH_VERSION + '/' + WHATSAPP_PHONE_NUMBER_ID + '/messages';
+  const caption = [
+    'Cuenta de cobro aprobada No. ' + record.numero_consecutivo,
+    'Contratante: ' + record.contratante_nombre,
+    'Fecha de radicación: ' + record.fecha_radicacion,
+    'Total abono: ' + formatMoney_(record.total_abono)
+  ].join(' | ');
+
+  const messagePayload = {
+    messaging_product: 'whatsapp',
+    recipient_type: 'individual',
+    to: to,
+    type: 'document',
+    document: {
+      id: mediaId,
+      filename: fileName,
+      caption: caption
+    }
+  };
+
+  const messageResponse = UrlFetchApp.fetch(messageUrl, {
+    method: 'post',
+    headers: {
+      Authorization: 'Bearer ' + WHATSAPP_ACCESS_TOKEN,
+      'Content-Type': 'application/json'
+    },
+    payload: JSON.stringify(messagePayload),
+    muteHttpExceptions: true
+  });
+
+  const messageStatus = messageResponse.getResponseCode();
+  const messageText = messageResponse.getContentText();
+  const messageData = parseJsonSafe_(messageText);
+  const messageId = messageData && messageData.messages && messageData.messages[0] && messageData.messages[0].id;
+
+  if (!(messageStatus >= 200 && messageStatus < 300) || !messageId) {
+    throw new Error('No se pudo enviar WhatsApp. Código ' + messageStatus + '. Respuesta: ' + messageText);
+  }
+
+  return {
+    mediaId: mediaId,
+    messageId: messageId,
+    to: to
+  };
+}
+
+function normalizePhone_(value) {
+  const digits = String(value || '').replace(/[^0-9]/g, '');
+  if (!digits) {
+    throw new Error('El número de WhatsApp destino no es válido.');
+  }
+  return digits;
+}
+
+function parseJsonSafe_(text) {
+  try {
+    return JSON.parse(String(text || '{}'));
+  } catch (error) {
+    return null;
+  }
 }
 
 function getSheet_() {
@@ -642,6 +760,24 @@ function json_(payload) {
     .setMimeType(ContentService.MimeType.JSON);
 }
 
+function jsonp_(callback, payload) {
+  const safeCallback = normalizeCallbackName_(callback);
+  const body = safeCallback + '(' + JSON.stringify(payload) + ');';
+  return ContentService.createTextOutput(body)
+    .setMimeType(ContentService.MimeType.JAVASCRIPT);
+}
+
+function normalizeCallbackName_(callback) {
+  const input = String(callback || '').trim();
+  if (!input) {
+    return 'callback';
+  }
+  if (!/^[a-zA-Z_$][0-9a-zA-Z_$.]*$/.test(input)) {
+    return 'callback';
+  }
+  return input;
+}
+
 function bridge_(requestId, payload) {
   const message = {
     type: 'gapt-cobro-response',
@@ -672,7 +808,5 @@ function escapeHtml_(value) {
 }
 
 function buildLogoDataUri_() {
-  const svg = '<?xml version="1.0" encoding="UTF-8"?>' +
-    '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 840 260"><rect x="14" y="14" width="812" height="232" rx="18" fill="#ffffff" stroke="#111111" stroke-width="6"/><g transform="translate(44 43)"><circle cx="78" cy="78" r="76" fill="none" stroke="#111111" stroke-width="12"/><path d="M124 76c0-32-25-54-58-54-35 0-60 24-60 58s24 58 60 58c27 0 49-11 60-34H91V87h58v50h-22l-5-18c-16 14-38 22-64 22-52 0-90-35-90-86S66 10 126 10c37 0 70 15 87 39l-28 16c-11-15-32-25-55-25-31 0-53 19-53 47 0 29 22 48 53 48 26 0 44-10 53-28l-19-3V76h-40z" fill="#111111"/></g><g transform="translate(260 68)" fill="#111111"><text x="0" y="42" font-family="Arial, Helvetica, sans-serif" font-size="54" font-weight="700" letter-spacing="11">GPARRAT</text><text x="3" y="102" font-family="Georgia, Times New Roman, serif" font-size="26" font-style="italic" letter-spacing="1">Mantenimiento y reparación</text></g></svg>';
-  return 'data:image/svg+xml;base64,' + Utilities.base64Encode(svg);
+  return 'https://gaptservicios.com.co/IMG/Logo%20sample.JPG?v=20260720';
 }
