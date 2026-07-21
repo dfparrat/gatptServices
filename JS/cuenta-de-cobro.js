@@ -242,7 +242,7 @@ const state = {
 	}
 
 	async function api(action, data = {}) {
-		if (!appUrl || appUrl.includes('REEMPLAZAR_CON_URL_DEL_WEB_APP_DE_APPS_SCRIPT')) {
+		if (!appUrl) {
 			throw new Error('Primero debes configurar la URL del Web App en cuenta-de-cobro.html.');
 		}
 
