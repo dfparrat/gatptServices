@@ -11,8 +11,6 @@
 		maximumFractionDigits: 0
 	});
 
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwzLW0iqpzHONMT2_lUl9nCfR1vz0uAaaRAfmsLpPZWhOUexJaJNCpKe2GMoxtxlkU/exec';
-
 const state = {
 	token: localStorage.getItem(storageKey) || '',
 	user: localStorage.getItem(storageUserKey) || '',
@@ -21,8 +19,7 @@ const state = {
 	approved: false
 };
 
-	const pendingRequests = new Map();
-	let requestSequence = 0;
+	let jsonpSequence = 0;
 
 	const elements = {
 		authGrid: document.getElementById('authGrid'),
@@ -57,29 +54,6 @@ const state = {
 		responsableIva: document.getElementById('responsable_iva'),
 		garantia: document.getElementById('garantia')
 	};
-
-	window.addEventListener('message', (event) => {
-		const data = event.data || {};
-		if (data.type !== 'gapt-cobro-response' || !data.requestId) {
-			return;
-		}
-
-		const pending = pendingRequests.get(data.requestId);
-		if (!pending) {
-			return;
-		}
-
-		pendingRequests.delete(data.requestId);
-		pending.cleanup();
-
-		const response = data.payload || {};
-		if (!response.ok) {
-			pending.reject(new Error(response.message || 'La operación no pudo completarse.'));
-			return;
-		}
-
-		pending.resolve(response);
-	});
 
 	const sharedDraftGuarantee = 'Garantía Servicio prestado de 12 Meses por daños no relacionados a daño físico o daños por humedad';
 
@@ -246,65 +220,54 @@ const state = {
 			throw new Error('Primero debes configurar la URL del Web App en cuenta-de-cobro.html.');
 		}
 
-		const requestId = 'req_' + Date.now() + '_' + (++requestSequence);
-		const iframe = document.createElement('iframe');
-		iframe.name = 'gaptCobroFrame_' + requestId;
-		iframe.style.display = 'none';
-		document.body.appendChild(iframe);
-
-		const form = document.createElement('form');
-		form.method = 'POST';
-		form.action = appUrl;
-		form.target = iframe.name;
-		form.style.display = 'none';
-
-		const fields = {
-			requestId,
-			responseMode: 'postMessage',
-			payload: JSON.stringify({
-				action,
-				token: state.token,
-				username: state.user,
-				...data
-			})
+		const payload = {
+			action,
+			token: state.token,
+			username: state.user,
+			...data
 		};
 
-		Object.entries(fields).forEach(([name, value]) => {
-			const input = document.createElement('input');
-			input.type = 'hidden';
-			input.name = name;
-			input.value = value;
-			form.appendChild(input);
-		});
+		return jsonpRequest(payload);
+	}
 
-		const cleanup = () => {
-			form.remove();
-			iframe.remove();
-		};
-
+	function jsonpRequest(payload) {
 		return new Promise((resolve, reject) => {
+			const callbackName = '__gaptCobroJsonpCb' + (++jsonpSequence);
+			const script = document.createElement('script');
 			const timeoutId = window.setTimeout(() => {
-				pendingRequests.delete(requestId);
 				cleanup();
 				reject(new Error('La solicitud tardó demasiado en responder.'));
 			}, 30000);
 
-			pendingRequests.set(requestId, {
-				resolve: (response) => {
-					window.clearTimeout(timeoutId);
-					cleanup();
-					resolve(response);
-				},
-				reject: (error) => {
-					window.clearTimeout(timeoutId);
-					cleanup();
-					reject(error);
-				},
-				cleanup
+			function cleanup() {
+				window.clearTimeout(timeoutId);
+				delete window[callbackName];
+				script.remove();
+			}
+
+			window[callbackName] = function (response) {
+				cleanup();
+				if (!response || !response.ok) {
+					reject(new Error((response && response.message) || 'La operación no pudo completarse.'));
+					return;
+				}
+				resolve(response);
+			};
+
+			const query = new URLSearchParams({
+				responseMode: 'jsonp',
+				callback: callbackName,
+				payload: JSON.stringify(payload)
 			});
 
-			document.body.appendChild(form);
-			form.submit();
+			script.src = appUrl + (appUrl.includes('?') ? '&' : '?') + query.toString();
+			script.async = true;
+			script.onerror = function () {
+				cleanup();
+				reject(new Error('No se pudo conectar con el Web App.'));
+			};
+
+			document.head.appendChild(script);
 		});
 	}
 
